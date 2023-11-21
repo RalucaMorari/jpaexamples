@@ -15,7 +15,7 @@ public class Franchises {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "franchises", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "franchises", cascade = CascadeType.MERGE, orphanRemoval = true)
     public List<Movies> franchisesMovies;
 
     public Franchises(String name) {

@@ -1,9 +1,12 @@
 package com.springapps.jpaexamples.MoviesApp;
 
+import com.springapps.jpaexamples.twitterapp.Tweet;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class FranchisesService {
@@ -20,10 +23,14 @@ public class FranchisesService {
     }
 
     @Transactional
-    public Franchises addMoviestoFranchises(Long franchisesId, @org.jetbrains.annotations.NotNull Movies movies){
+    public Franchises addMoviestoFranchises(Long franchisesId,Movies movies){
         Franchises franchises = franchisesRepository.findById(franchisesId).orElseThrow(()->new EntityNotFoundException("id not found"));
         movies.setFranchises(franchises);
         franchises.getFranchisesMovies().add(movies);
         return franchisesRepository.save(franchises);
+    }
+
+    public List<Movies> findAllMoviesByFranchises(Long franchisesId){
+        return franchisesRepository.findAllByFranchises_Id(franchisesId);
     }
 }
